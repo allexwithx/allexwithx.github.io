@@ -1,4 +1,6 @@
 body {font-family: 'Ubuntu'; margin: 0; background-color: #000000}
 p, h1 {color: antiquewhite}
-.cabecalho {text-align: center}
+.cabecalho {text-align: center; border-style: dashed; border-color: azure;}
 .foto-de-perfil {border-radius: 50px}
+.corpo-da-pagina {text-align: center; font-weight: bold}
+.rodape {text-align: center}
