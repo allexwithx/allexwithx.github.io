@@ -35,8 +35,11 @@ p, h1 {
 }
 
 .corpo-da-pagina {
-    text-align: center;
-    font-weight: bold
+    text-align: center  
+}
+
+.cp-lista-item-1 {
+    font-weight: bold;
 }
 
 .rodape {
