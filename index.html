@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página em Manutenção</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a192f 0%, #253555 100%);
+            color: #ffffff;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(78, 196, 255, 0.8), 0 0 20px rgba(78, 196, 255, 0.5);
+            color: #ffffff;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .orb {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(78, 196, 255, 0.8) 0%, rgba(78, 196, 255, 0.2) 70%, transparent 100%);
+            box-shadow: 0 0 30px rgba(78, 196, 255, 0.8), 0 0 60px rgba(78, 196, 255, 0.4);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -180%);
+            z-index: 5;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            animation: float-particle var(--duration) ease-in-out infinite;
+            animation-delay: var(--delay);
+            background: var(--color);
+            box-shadow: 0 0 5px var(--color);
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg"><path fill="%23253555" fill-opacity="0.5" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-repeat: no-repeat;
+            z-index: 2;
+            opacity: 0.7;
+            animation: wave-animation 10s linear infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.8;
+                transform: translate(-50%, -180%) scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -180%) scale(1.1);
+            }
+        }
+
+        @keyframes float-particle {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            25% {
+                opacity: var(--opacity);
+            }
+            75% {
+                opacity: var(--opacity);
+            }
+            100% {
+                transform: translateY(var(--travel-y)) translateX(var(--travel-x));
+                opacity: 0;
+            }
+        }
+
+        @keyframes wave-animation {
+            0% {
+                background-position-x: 0;
+            }
+            100% {
+                background-position-x: 1440px;
+            }
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+            .orb {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            .orb {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles-container" id="particles"></div>
+    <div class="wave"></div>
+    <div class="orb"></div>
+    <div class="container">
+        <h1>Manutenção</h1>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.getElementById('particles');
+            const colors = [
+                'rgba(78, 196, 255, 0.8)',  // Blue
+                'rgba(255, 107, 129, 0.8)',  // Pink
+                'rgba(255, 255, 255, 0.8)'   // White
+            ];
+            
+            // Create particles
+            function createParticles(count) {
+                for (let i = 0; i < count; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // Random size between 2px and 6px
+                    const size = Math.random() * 4 + 2;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    // Random position
+                    const posX = Math.random() * 100;
+                    const posY = Math.random() * 100;
+                    particle.style.left = `${posX}%`;
+                    particle.style.top = `${posY}%`;
+                    
+                    // Random color
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.setProperty('--color', color);
+                    
+                    // Random opacity
+                    const opacity = Math.random() * 0.5 + 0.3;
+                    particle.style.setProperty('--opacity', opacity);
+                    
+                    // Random animation duration between 3s and 8s
+                    const duration = Math.random() * 5 + 3;
+                    particle.style.setProperty('--duration', `${duration}s`);
+                    
+                    // Random animation delay
+                    const delay = Math.random() * 5;
+                    particle.style.setProperty('--delay', `${delay}s`);
+                    
+                    // Random travel distance
+                    const travelY = (Math.random() * 200 - 100);
+                    const travelX = (Math.random() * 200 - 100);
+                    particle.style.setProperty('--travel-y', `${travelY}px`);
+                    particle.style.setProperty('--travel-x', `${travelX}px`);
+                    
+                    particlesContainer.appendChild(particle);
+                }
+            }
+            
+            // Create particles based on screen size
+            const screenWidth = window.innerWidth;
+            let particleCount = 100;
+            
+            if (screenWidth < 480) {
+                particleCount = 50;
+            } else if (screenWidth < 768) {
+                particleCount = 75;
+            }
+            
+            createParticles(particleCount);
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                // Clear existing particles
+                particlesContainer.innerHTML = '';
+                
+                // Recalculate particle count
+                const newScreenWidth = window.innerWidth;
+                let newParticleCount = 100;
+                
+                if (newScreenWidth < 480) {
+                    newParticleCount = 50;
+                } else if (newScreenWidth < 768) {
+                    newParticleCount = 75;
+                }
+                
+                createParticles(newParticleCount);
+            });
+        });
+    </script>
+</body>
+</html>
